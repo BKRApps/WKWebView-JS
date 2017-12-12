@@ -1,0 +1,19 @@
+<!DOCTYPE html>
+<html>
+    <body>
+        <script>
+
+            function getMobileVersion(){
+                webkit.messageHandlers.VersionHandler.postMessage({})
+            }
+
+            function receivedMobileVersion(mobileVersion){
+            //here you will be getting the mobile version. Then execute the logic
+            webkit.messageHandlers.VerifyHandler.postMessage({version:mobileVersion})
+            }
+
+            getMobileVersion()
+
+            </script>
+    </body>
+</html>
