@@ -10,6 +10,7 @@
             function receivedMobileVersion(mobileVersion){
             //here you will be getting the mobile version. Then execute the logic
             if(mobileVersion === true){
+                // write your custom logic here.
                 webkit.messageHandlers.VerifyHandler.postMessage({version:mobileVersion})
             }
         }
