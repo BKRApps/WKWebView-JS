@@ -40,7 +40,7 @@ extension ViewController : WKScriptMessageHandler {
         switch message.name {
         case versionHandler:
             let mobileVersion = "1.0.0" // you can write custom logic here.
-            let script = "receivedMobileVersion('\(mobileVersion)')"
+            let script = "receivedMobileVersion(\(true))" // true or false dependeing upon your logic.
             self.wkWebView.evaluateJavaScript(script, completionHandler: { (data, error) in
                 if let err = error{
                     print(err)
