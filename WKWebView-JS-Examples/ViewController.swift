@@ -21,11 +21,28 @@ class ViewController: UIViewController {
         configuration.userContentController.add(self, name: versionHandler)
         configuration.userContentController.add(self, name: verifyHandler)
         wkWebView = WKWebView(frame: view.frame, configuration: configuration)
+        view=wkWebView
     }
 
     override func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(animated);
         loadHtmlIntoWebview()
+
+        //create a simple cookie and set the cookie to cookie store.
+        let cookiestore = wkWebView.configuration.websiteDataStore.httpCookieStore
+        let cookiePropDict:[HTTPCookiePropertyKey:Any] = [.name:"WhatIsYourName",.value:"Kumar Reddy",.secure:true,.domain:".apple.com",.originURL:".apple.com",HTTPCookiePropertyKey.path:"/",.version:"0"];
+        let cookie = HTTPCookie(properties: cookiePropDict)
+        //setCookie is an Async call. load the url in the completion handler.
+        cookiestore.setCookie(cookie!) { [unowned self] in
+            self.loadHtmlIntoWebview()
+            // you can retrieve cookie here.
+            cookiestore.getAllCookies({ (cookies) in
+                print("\n Cookie Example",_:"\n")
+                for cookie in cookies {
+                    print("\(cookie.name) -> \(cookie.value)")
+                }
+            })
+        }
     }
 
     internal func loadHtmlIntoWebview() -> Void {
@@ -47,6 +64,7 @@ extension ViewController : WKScriptMessageHandler {
                 }
             })
         case verifyHandler:
+            print("\n JS bridge Example",_:"\n")
             print("Validation of version")
             print(message.body)
         default:
